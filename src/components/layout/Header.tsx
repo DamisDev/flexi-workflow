@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { History, LogOut, ChevronDown } from "lucide-react";
 import {
@@ -15,6 +15,7 @@ import {
 
 const Header = () => {
   const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <motion.header
@@ -48,7 +49,10 @@ const Header = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="bg-white">
-                  <DropdownMenuItem className="cursor-pointer flex items-center gap-2">
+                  <DropdownMenuItem 
+                    className="cursor-pointer flex items-center gap-2"
+                    onClick={() => navigate('/history')}
+                  >
                     <History className="h-4 w-4" />
                     <span>History</span>
                   </DropdownMenuItem>

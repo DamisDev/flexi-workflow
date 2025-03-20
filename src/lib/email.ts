@@ -77,6 +77,10 @@ export const sendWeeklyWorkModeEmail = async ({
   console.log(`Sending weekly email to: ${to}`);
   console.log(`Week starting: ${formatDate(weekStartDate)}`);
   
+  // Create email body
+  console.log("Email body:");
+  console.log("Below are the work arrangements for the upcoming week");
+  
   // Log each day's work mode
   Object.entries(workModes).forEach(([dateString, mode]) => {
     if (mode) {
@@ -87,6 +91,28 @@ export const sendWeeklyWorkModeEmail = async ({
   
   // Simulate network request delay
   await new Promise(resolve => setTimeout(resolve, 1000));
+  
+  // Save to history in local storage
+  try {
+    const userId = firstName + lastName; // This is a simplification, use actual user ID in real app
+    const historyEntry = {
+      weekStartDate,
+      workModes,
+      submittedAt: new Date()
+    };
+    
+    // Get existing history
+    const existingHistoryStr = localStorage.getItem(`workmode_history_${userId}`);
+    const existingHistory = existingHistoryStr ? JSON.parse(existingHistoryStr) : [];
+    
+    // Add new entry
+    existingHistory.unshift(historyEntry);
+    
+    // Save back to localStorage
+    localStorage.setItem(`workmode_history_${userId}`, JSON.stringify(existingHistory));
+  } catch (error) {
+    console.error("Error saving to history:", error);
+  }
   
   // Simulate successful email sending
   return true;
