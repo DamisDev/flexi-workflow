@@ -4,14 +4,12 @@ import { useAuth } from "@/contexts/AuthContext";
 import AuthForm from "@/components/AuthForm";
 import WeeklyPlanner from "@/components/WeeklyPlanner";
 import WeeklySummary from "@/components/WeeklySummary";
-import CalendarView from "@/components/CalendarView";
 import { WorkMode, WeeklyWorkModes } from "@/types";
 import { sendWeeklyWorkModeEmail } from "@/lib/email";
 import { toast } from "sonner";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { startOfWeek } from "date-fns";
 
 const Dashboard = () => {
@@ -20,7 +18,6 @@ const Dashboard = () => {
   const [weekStartDate, setWeekStartDate] = useState<Date>(
     startOfWeek(new Date(), { weekStartsOn: 1 })
   );
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [emailSent, setEmailSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -58,10 +55,6 @@ const Dashboard = () => {
     setEmailSent(false);
   };
 
-  const handleDateSelect = (date: Date) => {
-    setSelectedDate(date);
-  };
-
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex flex-col">
@@ -95,42 +88,23 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="max-w-7xl mx-auto"
+            className="max-w-4xl mx-auto"
           >
-            <ResizablePanelGroup
-              direction="horizontal"
-              className="min-h-[600px] rounded-lg border"
-            >
-              <ResizablePanel defaultSize={30} minSize={25}>
-                <div className="p-6">
-                  <h2 className="text-2xl font-medium mb-6">Calendar</h2>
-                  <CalendarView 
-                    onDateSelect={handleDateSelect} 
-                    selectedDate={selectedDate}
-                  />
-                </div>
-              </ResizablePanel>
-              
-              <ResizableHandle withHandle />
-              
-              <ResizablePanel defaultSize={70}>
-                <div className="p-6">
-                  {emailSent ? (
-                    <WeeklySummary
-                      workModes={weeklyWorkModes}
-                      weekStartDate={weekStartDate}
-                      email={user.email}
-                      onReset={resetSelection}
-                    />
-                  ) : (
-                    <WeeklyPlanner 
-                      onSubmit={handleWeeklySubmit} 
-                      isLoading={isLoading}
-                    />
-                  )}
-                </div>
-              </ResizablePanel>
-            </ResizablePanelGroup>
+            <div className="bg-white rounded-lg border shadow-sm p-6">
+              {emailSent ? (
+                <WeeklySummary
+                  workModes={weeklyWorkModes}
+                  weekStartDate={weekStartDate}
+                  email={user.email}
+                  onReset={resetSelection}
+                />
+              ) : (
+                <WeeklyPlanner 
+                  onSubmit={handleWeeklySubmit} 
+                  isLoading={isLoading}
+                />
+              )}
+            </div>
           </motion.div>
         </div>
       </main>
