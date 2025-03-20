@@ -2,45 +2,49 @@
 import React, { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import AuthForm from "@/components/AuthForm";
-import WorkModeSelector from "@/components/WorkModeSelector";
-import EmailSummary from "@/components/EmailSummary";
+import WeeklyPlanner from "@/components/WeeklyPlanner";
+import WeeklySummary from "@/components/WeeklySummary";
 import CalendarView from "@/components/CalendarView";
-import { WorkMode } from "@/types";
-import { sendWorkModeEmail } from "@/lib/email";
+import { WorkMode, WeeklyWorkModes } from "@/types";
+import { sendWeeklyWorkModeEmail } from "@/lib/email";
 import { toast } from "sonner";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
+import { startOfWeek } from "date-fns";
 
 const Dashboard = () => {
   const { user, isAuthenticated } = useAuth();
-  const [selectedWorkMode, setSelectedWorkMode] = useState<WorkMode | null>(null);
+  const [weeklyWorkModes, setWeeklyWorkModes] = useState<WeeklyWorkModes>({});
+  const [weekStartDate, setWeekStartDate] = useState<Date>(
+    startOfWeek(new Date(), { weekStartsOn: 1 })
+  );
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [emailSent, setEmailSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleWorkModeSubmit = async (mode: WorkMode, date: Date) => {
+  const handleWeeklySubmit = async (workModes: WeeklyWorkModes, startDate: Date) => {
     if (!user) return;
     
     try {
       setIsLoading(true);
       
-      const success = await sendWorkModeEmail({
+      const success = await sendWeeklyWorkModeEmail({
         to: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        workMode: mode,
-        date,
+        workModes,
+        weekStartDate: startDate,
       });
       
       if (success) {
-        setSelectedWorkMode(mode);
-        setSelectedDate(date);
+        setWeeklyWorkModes(workModes);
+        setWeekStartDate(startDate);
         setEmailSent(true);
-        toast.success("Work mode selection sent successfully!");
+        toast.success("Weekly schedule submitted successfully!");
       } else {
-        toast.error("Failed to send work mode selection. Please try again.");
+        toast.error("Failed to submit weekly schedule. Please try again.");
       }
     } catch (error) {
       toast.error("An error occurred. Please try again later.");
@@ -50,8 +54,7 @@ const Dashboard = () => {
   };
 
   const resetSelection = () => {
-    setSelectedWorkMode(null);
-    setSelectedDate(null);
+    setWeeklyWorkModes({});
     setEmailSent(false);
   };
 
@@ -112,15 +115,18 @@ const Dashboard = () => {
               
               <ResizablePanel defaultSize={70}>
                 <div className="p-6">
-                  {emailSent && selectedWorkMode && selectedDate ? (
-                    <EmailSummary
-                      workMode={selectedWorkMode}
-                      date={selectedDate}
+                  {emailSent ? (
+                    <WeeklySummary
+                      workModes={weeklyWorkModes}
+                      weekStartDate={weekStartDate}
                       email={user.email}
                       onReset={resetSelection}
                     />
                   ) : (
-                    <WorkModeSelector onSubmit={handleWorkModeSubmit} />
+                    <WeeklyPlanner 
+                      onSubmit={handleWeeklySubmit} 
+                      isLoading={isLoading}
+                    />
                   )}
                 </div>
               </ResizablePanel>

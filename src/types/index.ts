@@ -18,6 +18,15 @@ export interface WorkModeSelection {
   mode: WorkMode;
 }
 
+export interface DailyWorkMode {
+  date: Date;
+  mode: WorkMode | null;
+}
+
+export interface WeeklyWorkModes {
+  [key: string]: WorkMode | null;
+}
+
 export interface WorkModeOption {
   id: WorkMode;
   title: string;
