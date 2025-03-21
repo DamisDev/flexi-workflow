@@ -53,7 +53,7 @@ const AuthForm = () => {
             <Input id="lastName" value={lastName} onChange={e => setLastName(e.target.value)} placeholder="Doe" required className="bg-white/50" />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Company Email</Label>
+            <Label htmlFor="email">E-mail aziendale</Label>
             <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="john.doe@company.com" required className="bg-white/50" />
           </div>
           <Button type="submit" className="w-full btn-hover" disabled={isLoading}>
