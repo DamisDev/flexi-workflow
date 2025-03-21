@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { WeeklyWorkModes } from "@/types";
@@ -26,12 +25,10 @@ const History = () => {
 
   useEffect(() => {
     if (isAuthenticated && user) {
-      // Load history from local storage
       const storedHistory = localStorage.getItem(`workmode_history_${user.id}`);
       if (storedHistory) {
         try {
           const parsedHistory = JSON.parse(storedHistory, (key, value) => {
-            // Convert date strings back to Date objects
             if (key === "weekStartDate" || key === "submittedAt") {
               return new Date(value);
             }
@@ -77,7 +74,7 @@ const History = () => {
                 variant="outline" 
                 size="sm" 
                 onClick={() => navigate('/dashboard')}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 border-[#a30000] text-[#a30000] hover:bg-[#a30000]/10"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Back to Dashboard
@@ -92,8 +89,8 @@ const History = () => {
               <div className="bg-white rounded-lg border shadow-sm p-6">
                 <Tabs defaultValue="list" className="w-full">
                   <TabsList className="mb-4">
-                    <TabsTrigger value="list">List View</TabsTrigger>
-                    <TabsTrigger value="email">Email View</TabsTrigger>
+                    <TabsTrigger value="list" className="data-[state=active]:bg-[#a30000] data-[state=active]:text-white">List View</TabsTrigger>
+                    <TabsTrigger value="email" className="data-[state=active]:bg-[#a30000] data-[state=active]:text-white">Email View</TabsTrigger>
                   </TabsList>
                   
                   <TabsContent value="list" className="mt-0">
@@ -121,7 +118,7 @@ const History = () => {
                                   .map(([dateString, mode]) => 
                                     mode && (
                                       <div key={dateString} className="mb-1">
-                                        <span className="font-medium">{format(new Date(dateString), "EEE, MMM d")}</span>: {formatWorkMode(mode)}
+                                        <span className="font-medium">{format(new Date(dateString), "EEE, MMM d")}</span>: <span className="text-[#a30000]">{formatWorkMode(mode)}</span>
                                       </div>
                                     )
                                   )}
@@ -150,7 +147,7 @@ const History = () => {
                               .map(([dateString, mode]) => 
                                 mode && (
                                   <div key={dateString}>
-                                    <span className="font-medium">{format(new Date(dateString), "EEEE, MMMM d")}</span>: {formatWorkMode(mode)}
+                                    <span className="font-medium">{format(new Date(dateString), "EEEE, MMMM d")}</span>: <span className="text-[#a30000]">{formatWorkMode(mode)}</span>
                                   </div>
                                 )
                               )}
