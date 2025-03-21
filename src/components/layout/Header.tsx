@@ -25,8 +25,8 @@ const Header = () => {
       className="fixed top-0 left-0 right-0 bg-white bg-opacity-80 backdrop-blur-md z-50 border-b border-gray-100"
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center space-x-2">
-          <span className="text-xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
+        <Link to="/dashboard" className="flex items-center space-x-2">
+          <span className="text-xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary to-[#a30000]">
             FlexiWork
           </span>
         </Link>
@@ -58,7 +58,7 @@ const Header = () => {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem 
-                    className="cursor-pointer flex items-center gap-2 text-red-500"
+                    className="cursor-pointer flex items-center gap-2 text-[#a30000]"
                     onClick={logout}
                   >
                     <LogOut className="h-4 w-4" />
@@ -68,9 +68,13 @@ const Header = () => {
               </DropdownMenu>
             </div>
           ) : (
-            <Link to="/dashboard">
-              <Button size="sm" className="btn-hover">Get Started</Button>
-            </Link>
+            <Button 
+              size="sm" 
+              className="btn-hover"
+              onClick={() => navigate('/dashboard')}
+            >
+              Sign In
+            </Button>
           )}
         </div>
       </div>
