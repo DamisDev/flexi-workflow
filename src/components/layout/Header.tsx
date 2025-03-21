@@ -27,7 +27,7 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/dashboard" className="flex items-center space-x-2">
           <span className="text-xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary to-[#a30000]">
-            FlexiWork
+            FlwxiLavoro
           </span>
         </Link>
 

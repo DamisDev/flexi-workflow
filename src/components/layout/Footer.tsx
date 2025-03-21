@@ -12,7 +12,7 @@ const Footer = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} FlexiWork. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} FlwxiLavoro. All rights reserved.</p>
           <div className="mt-4 md:mt-0 flex space-x-4">
             <a href="#" className="hover:text-primary transition-colors">
               Privacy Policy
