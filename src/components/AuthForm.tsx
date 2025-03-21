@@ -39,7 +39,7 @@ const AuthForm = () => {
   };
   return <Card className="w-full max-w-md mx-auto glass-card animate-scale">
       <CardHeader>
-        <CardTitle className="text-2xl font-medium">Sign In</CardTitle>
+        <CardTitle className="text-2xl font-medium text-center">Accedi</CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
