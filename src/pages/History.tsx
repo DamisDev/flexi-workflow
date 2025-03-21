@@ -9,6 +9,9 @@ import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 interface HistoryEntry {
   weekStartDate: Date;
@@ -19,6 +22,7 @@ interface HistoryEntry {
 const History = () => {
   const { user, isAuthenticated } = useAuth();
   const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -67,7 +71,18 @@ const History = () => {
             transition={{ duration: 0.5 }}
             className="max-w-4xl mx-auto"
           >
-            <h1 className="text-2xl font-semibold mb-6">Work Schedule History</h1>
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="text-2xl font-semibold">Work Schedule History</h1>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => navigate('/dashboard')}
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to Dashboard
+              </Button>
+            </div>
             
             {history.length === 0 ? (
               <div className="bg-white rounded-lg border shadow-sm p-6 text-center">
