@@ -45,11 +45,11 @@ const AuthForm = () => {
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="firstName">First Name</Label>
+            <Label htmlFor="firstName">Nome</Label>
             <Input id="firstName" value={firstName} onChange={e => setFirstName(e.target.value)} placeholder="John" required className="bg-white/50" />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="lastName">Last Name</Label>
+            <Label htmlFor="lastName">Cognome</Label>
             <Input id="lastName" value={lastName} onChange={e => setLastName(e.target.value)} placeholder="Doe" required className="bg-white/50" />
           </div>
           <div className="space-y-2">
@@ -62,9 +62,7 @@ const AuthForm = () => {
           </Button>
         </form>
       </CardContent>
-      <CardFooter className="flex justify-center text-sm text-muted-foreground">
-        Your work preferences will be sent to this email
-      </CardFooter>
+      
     </Card>;
 };
 export default AuthForm;
