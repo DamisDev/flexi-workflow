@@ -23,12 +23,19 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({
   
   // Automatically redirect to dashboard after a delay
   useEffect(() => {
+    console.log("Setting up redirect timer");
+    
     const timer = setTimeout(() => {
+      console.log("Timer expired, redirecting to dashboard");
       navigate('/dashboard');
     }, 5000);
     
-    return () => clearTimeout(timer);
-  }, [navigate]);
+    // Cleanup function to clear the timeout if component unmounts
+    return () => {
+      console.log("Cleaning up timer");
+      clearTimeout(timer);
+    };
+  }, []); // Empty dependency array ensures this runs only once when component mounts
 
   return (
     <Card className="w-full max-w-lg mx-auto border shadow-sm">
