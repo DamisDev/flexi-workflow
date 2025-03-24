@@ -1,11 +1,11 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { WeeklyWorkModes } from "@/types";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatWorkMode, formatDate } from "@/lib/email";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatWorkMode } from "@/lib/email";
 import { CheckCircle } from "lucide-react";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 interface WeeklySummaryProps {
   workModes: WeeklyWorkModes;
@@ -18,8 +18,18 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({
   workModes,
   weekStartDate,
   email,
-  onReset,
 }) => {
+  const navigate = useNavigate();
+  
+  // Automatically redirect to dashboard after a delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate('/dashboard');
+    }, 5000);
+    
+    return () => clearTimeout(timer);
+  }, [navigate]);
+
   return (
     <Card className="w-full max-w-lg mx-auto border shadow-sm">
       <CardHeader className="pb-3 space-y-2">
@@ -30,7 +40,8 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({
         </div>
         <CardTitle className="text-xl font-medium text-center">Weekly Schedule Submitted</CardTitle>
         <CardDescription className="text-center">
-          Your work mode preferences for the week have been sent
+          Your work mode preferences for the week have been sent.
+          <br />You will be redirected to the dashboard in a few seconds.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -60,11 +71,6 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({
           </div>
         </div>
       </CardContent>
-      <CardFooter>
-        <Button onClick={onReset} className="w-full">
-          Plan Another Week
-        </Button>
-      </CardFooter>
     </Card>
   );
 };
