@@ -23,6 +23,7 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({
   const navigate = useNavigate();
   
   const handleGoToDashboard = () => {
+    console.log("Navigate to dashboard");
     navigate('/dashboard');
   };
 
@@ -67,7 +68,10 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({
           </div>
         </div>
         <div className="flex justify-center mt-6">
-          <Button onClick={handleGoToDashboard} className="w-full sm:w-auto">
+          <Button 
+            onClick={handleGoToDashboard} 
+            className="w-full sm:w-auto"
+          >
             Go back to Dashboard
           </Button>
         </div>
