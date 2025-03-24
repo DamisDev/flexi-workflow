@@ -1,11 +1,12 @@
 
-import React, { useEffect } from "react";
+import React from "react";
 import { WeeklyWorkModes } from "@/types";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatWorkMode } from "@/lib/email";
 import { CheckCircle } from "lucide-react";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 interface WeeklySummaryProps {
   workModes: WeeklyWorkModes;
@@ -21,21 +22,9 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({
 }) => {
   const navigate = useNavigate();
   
-  // Automatically redirect to dashboard after a delay
-  useEffect(() => {
-    console.log("Setting up redirect timer");
-    
-    const timer = setTimeout(() => {
-      console.log("Timer expired, redirecting to dashboard");
-      navigate('/dashboard');
-    }, 5000);
-    
-    // Cleanup function to clear the timeout if component unmounts
-    return () => {
-      console.log("Cleaning up timer");
-      clearTimeout(timer);
-    };
-  }, []); // Empty dependency array ensures this runs only once when component mounts
+  const handleGoToDashboard = () => {
+    navigate('/dashboard');
+  };
 
   return (
     <Card className="w-full max-w-lg mx-auto border shadow-sm">
@@ -48,7 +37,6 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({
         <CardTitle className="text-xl font-medium text-center">Weekly Schedule Submitted</CardTitle>
         <CardDescription className="text-center">
           Your work mode preferences for the week have been sent.
-          <br />You will be redirected to the dashboard in a few seconds.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -76,6 +64,11 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({
                 );
               })}
           </div>
+        </div>
+        <div className="flex justify-center mt-6">
+          <Button onClick={handleGoToDashboard}>
+            Go to Dashboard
+          </Button>
         </div>
       </CardContent>
     </Card>
