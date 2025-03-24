@@ -37,6 +37,7 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({
         <CardTitle className="text-xl font-medium text-center">Weekly Schedule Submitted</CardTitle>
         <CardDescription className="text-center">
           Your work mode preferences for the week have been sent.
+          <br />Click the button below to return to the dashboard.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -66,8 +67,8 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({
           </div>
         </div>
         <div className="flex justify-center mt-6">
-          <Button onClick={handleGoToDashboard}>
-            Go to Dashboard
+          <Button onClick={handleGoToDashboard} className="w-full sm:w-auto">
+            Go back to Dashboard
           </Button>
         </div>
       </CardContent>
